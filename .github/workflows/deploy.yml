@@ -22,4 +22,4 @@ jobs:
           cd 'C:\PruebasJason'
           git pull
         }"
-        echo "PRUEBA SERVIDOR"
+        Write-Host "PRUEBA SERVIDOR"
