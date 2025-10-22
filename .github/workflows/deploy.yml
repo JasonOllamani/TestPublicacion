@@ -17,7 +17,7 @@ jobs:
       run: |
         pwsh -Command "
         \$secpasswd = ConvertTo-SecureString '${{ secrets.WS_PASSWORD }}' -AsPlainText -Force
-        \$cred = New-Object System.Management.Automation.PSCredential ('${{ secrets.WS_USER }}', \$secpasswd)
+        \$cred = New-Object System.Management.Automation.PSCredential ('${{ secrets.WS_USER }}' \$secpasswd)
         Invoke-Command -ComputerName '${{ secrets.WS_HOST }}' -Credential \$cred -ScriptBlock {
           Write-Host 'Conexion exitosa'
           cd 'C:\PruebasJason'
