@@ -13,14 +13,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Deploy via PowerShell
-      shell: pwsh
+    - name: Deploy via SSH
       run: |
-        $secpasswd = ConvertTo-SecureString '${{ secrets.WS_PASSWORD }}' -AsPlainText -Force
-        $cred = New-Object System.Management.Automation.PSCredential ('${{ secrets.WS_USER }}', $secpasswd)
-        Invoke-Command -ComputerName '${{ secrets.WS_HOST }}' -Port 5986 -Credential $cred -Authentication Basic -UseSSL -ScriptBlock {
-          Write-Host 'Conexion exitosa'
-          cd 'C:\PruebasJason'
-          git pull
-        }
-        Write-Host "PRUEBA SERVIDOR"
+        ssh -o StrictHostKeyChecking=no ${{ secrets.WS_USER }}@${{ secrets.WS_HOST }} -p 22 
+        "echo 'Conexion establecida';
+        cd C:\PruebasJason && git pull"
