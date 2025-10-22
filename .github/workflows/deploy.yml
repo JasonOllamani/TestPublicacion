@@ -18,7 +18,7 @@ jobs:
       run: |
         $secpasswd = ConvertTo-SecureString '${{ secrets.WS_PASSWORD }}' -AsPlainText -Force
         $cred = New-Object System.Management.Automation.PSCredential ('${{ secrets.WS_USER }}', $secpasswd)
-        Invoke-Command -ComputerName '${{ secrets.WS_HOST }}' -Credential $cred -Authentication Basic -UseSSL -ScriptBlock {
+        Invoke-Command -ComputerName '${{ secrets.WS_HOST }}' -Port 22 -Credential $cred -Authentication Basic -UseSSL -ScriptBlock {
           Write-Host 'Conexion exitosa'
           cd 'C:\PruebasJason'
           git pull
