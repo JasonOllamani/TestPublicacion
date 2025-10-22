@@ -15,11 +15,12 @@ jobs:
 
     - name: Deploy via PowerShell
       run: |
-        pwsh -Command "
+        pwsh -Command '
         $secpasswd = ConvertTo-SecureString '${{ secrets.WS_PASSWORD }}' -AsPlainText -Force
         $cred = New-Object System.Management.Automation.PSCredential ('${{ secrets.WS_USER }}', $secpasswd)
         Invoke-Command -ComputerName '${{ secrets.WS_HOST }}' -Credential $cred -ScriptBlock {
-          cd 'C:\PruebasJason'
+          cd "C:\PruebasJason"
           git pull
-        }"
+        }
         Write-Host "PRUEBA SERVIDOR"
+        '
