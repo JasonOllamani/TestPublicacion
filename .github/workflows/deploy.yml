@@ -13,8 +13,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Deploy via SSH
+    - name: Deploy via Web Deploy
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.WS_USER }}@${{ secrets.WS_HOST }} -p 22 
-        "echo 'Conexion establecida';
-        cd C:\PruebasJason && git pull"
+        & "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe" `
+        -verb:sync `
+        -source:contentPath="${{ github.workspace }}" `
+        -dest:contentPath="Default Web Site",computerName="https://${{ secrets.WS_HOST }}:8172/msdeploy.axd",
+        userName="${{ secrets.WS_USER }}",password="${{ secrets.WS_PASSWORD }}",authType="Basic"
